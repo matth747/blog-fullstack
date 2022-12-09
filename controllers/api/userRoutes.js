@@ -66,19 +66,18 @@ router.post('/login', async (req, res) => {
 
 
 
-router.get('/userpage', async (req, res) => {
+router.get('/posts', async (req, res) => {
     try {
         // Get all users, sorted by name
-        const userData = await User.findAll({
-            attributes: { exclude: ['password'] },
-            order: [['username', 'ASC']],
+        const postData = await User.findAll({
+
         });
         
         // Serialize user data so templates can read it
-        const users = userData.map((project) => project.get({ plain: true }));
+        const posts = postData.map((project) => project.get({ plain: true }));
         
         // Pass serialized data into Handlebars.js template
-        res.render('homepage', { users });
+        res.render('dashboard', { posts });
     } catch (err) {
         res.status(500).json(err);
     }
